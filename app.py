@@ -11,42 +11,44 @@ Rules of the game:
 """
 from getpass import getpass as maskinput
 
-class JanKenPo:
+class JanKenPo(object):
     
+    # SELECTION = [select for select in ["rock", "paper", "scissors"]]
+    COUNTER = int(input("\n Enter number of games to play. 0 to quit: "))
+
     def __init__(self, name, choice):
-        self.name = name        
+        self.name = name
+        self.choice = choice
 
     def get_player_name(self):
         return self.name
 
-    # def get_player_two_name(self):
-    #     return self.player_two
+    def get_player_choice(self):
+        return self.choice
 
-    # SELECTION = [select for select in ["rock", "paper", "scissors"]]
-    # PLAYER1_NAME = input("Player ONE, enter your name. 'q' to quit: ").title()
-    # PLAYER2_NAME = input("Player TWO, enter your name. 'q' to quit: ").title()
-    # COUNTER = int(input("Enter number of games to play. 0 to quit: "))
+    @classmethod
+    def from_input(cls):
+        return cls(
+            raw_input('\t Name: ').title(),
+            maskinput('\t Choice: ').lower()
+        )
 
-    # while COUNTER != 0:
-    #     print("Enter rock, paper, or scissors as choices. 'q' to quit")
-    #     PLAYER1_CHOICE = maskinput(("{}, your choice: ").format(PLAYER1_NAME)).lower()
-    #     PLAYER2_CHOICE = maskinput(("{}, your choice: ").format(PLAYER2_NAME)).lower()
-
-    #     if PLAYER1_CHOICE == 'q' or PLAYER2_CHOICE == 'q':
-    #         print('Goodbye!')
-    #         break
-        
-    #     if PLAYER1_CHOICE == PLAYER2_CHOICE:
-    #         print("It's a tie! Play again.")
-        
-    #     else:
-    #         print("{} chose {}".format(PLAYER1_NAME, PLAYER1_CHOICE))
-    #         print("{} chose {}".format(PLAYER2_NAME, PLAYER2_CHOICE))
-
-    #     COUNTER -= 1
 
 if __name__ == "__main__":
-    frank = JanKenPo("Frank", "rock")
-    tammy = JanKenPo("Tammy", "paper")
+    rounds = JanKenPo.COUNTER
+    player_one = JanKenPo.from_input()
+    player_two = JanKenPo.from_input()
 
-    print(frank.get_player_name(), tammy.get_player_name())
+    while rounds != 0:
+        if player_one.get_player_choice() == 'q' or player_two.get_player_choice == 'q':
+            print('Goodbye!')
+            break
+        
+        if player_one.get_player_choice() == player_two.get_player_choice:
+            print("It's a tie! Play again.")
+        
+        else:
+            print("{} chose {}".format(player_one.get_player_name(), player_one.get_player_choice()))
+            print("{} chose {}".format(player_two.get_player_name(), player_two.get_player_choice()))
+
+        rounds -= 1
